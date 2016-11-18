@@ -1,6 +1,7 @@
 #include <WaveHC.h>
 #include <WaveUtil.h>
 
+String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
 
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
@@ -32,5 +33,16 @@ void setup() {
 }
 
 void loop() {
+  root.rewind();
+  FatReader file;
 
+  for (int i = 0; i < 4; i++) {
+    char fileName[fileNames[i].length() + 1];
+    fileNames[i].toCharArray(fileName, fileNames[i].length() + 1);
+
+    file.open(root, fileName);
+    wave.create(file);
+    wave.play();
+    while (wave.isplaying) delay(100);
+  }
 }
