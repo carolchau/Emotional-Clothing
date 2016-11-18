@@ -1,5 +1,7 @@
 #include <WaveHC.h>
 #include <WaveUtil.h>
+#include <Wire.h>
+#include "Adafruit_TCS34725.h"
 
 String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
 
@@ -7,6 +9,8 @@ SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
+
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_700MS, TCS34725_GAIN_1X);
 
 void setupSdReader(SdReader &card) {
   if (!card.init()) Serial.println("Card init failed");
@@ -25,11 +29,16 @@ void setupFatReader(FatReader &root) {
   if (!root.openRoot(vol)) Serial.println("Can't open root dir");
 }
 
+void setupRGBSensor(Adafruit_TCS34725 &tcs) {
+  if (!tcs.begin()) Serial.println("No TCS34725 found ... check your connections");
+}
+
 void setup() {
   Serial.begin(9600);
   setupSdReader(card);
   setupFatVolume(vol);
   setupFatReader(root);
+  setupRGBSensor(tcs);
 }
 
 void loop() {
