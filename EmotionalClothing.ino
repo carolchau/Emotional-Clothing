@@ -2,6 +2,9 @@
 #include <WaveUtil.h>
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 9, 8, 7, 6);
 
 String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
 
@@ -39,6 +42,8 @@ void setup() {
   setupFatVolume(vol);
   setupFatReader(root);
   setupRGBSensor(tcs);
+  lcd.begin(16, 2);
+  lcd.print("Before");
 }
 
 void loop() {
