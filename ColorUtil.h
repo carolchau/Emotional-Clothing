@@ -56,6 +56,25 @@ double getLightness(double cMax, double cMin) {
 }
 
 /**
+ * Calculates the intermediate RGB values for final RGB calculation.
+ *
+ * @param r Red Prime.
+ * @param g Green Prime.
+ * @param b Blue Prime.
+ * @param H Hue value.
+ * @param C Temporary variable.
+ * @param X Temporary variable.
+ */
+void assignRGBPrimes(double &r, double &g, double &b, int H, double C, double X) {
+  if (H < 60) { r = C; g = X; b = 0; }
+  else if (H < 120) { r = X; g = C; b = 0; }
+  else if (H < 180) { r = 0; g = C; b = X; }
+  else if (H < 240) { r = 0; g = X; b = C; }
+  else if (H < 300) { r = X; g = 0; b = C; }
+  else if (H < 360) { r = C; g = 0; b = X; }
+}
+
+/**
  * Fills in the provided double array with HSL values mapped
  * from the given RGB values.
  *
@@ -77,6 +96,32 @@ double getLightness(double cMax, double cMin) {
   hsl[0] = getHue(r, g, b, cMax, delta);
   hsl[1] = getSaturation(delta, lightness);
   hsl[2] = lightness;
+}
+
+/**
+ * Fills in the provided int array with RGB values mapped
+ * from the given HSL values.
+ *
+ * @param rgb The int array to be filled.
+ * @param H Hue value.
+ * @param S Saturation value.
+ * @param L Lightness value.
+ */
+void getRGB(int rgb[3], int H, double S, double L) {
+  double C = (1 - abs(2 * L - 1) * S);
+  double X = C * (1 - abs(H/60 % 2 - 1));
+  double m = L - C/2.0;
+
+  Serial.print("C-X-m "); Serial.print(C); Serial.print("-"); Serial.print(X); Serial.print("-"); Serial.println(m);
+
+  double r, g, b;
+  assignRGBPrimes(r, g, b, H, C, X);
+
+  Serial.print("r-g-b "); Serial.print(r); Serial.print("-"); Serial.print(g); Serial.print("-"); Serial.println(b);
+
+  rgb[0] = (r + m) * 255;
+  rgb[1] = (g + m) * 255;
+  rgb[2] = (b + m) * 255;
 }
 
 #endif
