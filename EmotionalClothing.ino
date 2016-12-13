@@ -6,7 +6,7 @@
 
 #include "ColorUtil.h"
 
-LiquidCrystal lcd(12, 11, 9, 8, 7, 6);
+LiquidCrystal lcd(1, 0, 9, 8, 7, 6);
 
 String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
 
@@ -39,12 +39,12 @@ void setupRGBSensor(Adafruit_TCS34725 &tcs) {
 }
 
 void setup() {
-  Serial.begin(9600);
   setupSdReader(card);
   setupFatVolume(vol);
   setupFatReader(root);
   setupRGBSensor(tcs);
   lcd.begin(16, 2);
+  lcd.clear();
   lcd.print("Before");
 }
 
