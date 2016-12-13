@@ -10,6 +10,8 @@ LiquidCrystal lcd(1, 0, 9, 8, 7, 6);
 
 String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
 
+const int button = A3;
+
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
@@ -46,9 +48,10 @@ void setup() {
   lcd.begin(16, 2);
   lcd.clear();
   lcd.print("Before");
+  pinMode(button, INPUT);
 }
 
-void loop() {
+void play() {
   root.rewind();
   FatReader file;
 
@@ -61,4 +64,14 @@ void loop() {
     wave.play();
     while (wave.isplaying) delay(100);
   }
+}
+
+void loop() {
+  int state = digitalRead(button);
+  bool pushed = (state == LOW);
+  if (pushed) {
+    play();
+  }
+
+  delay(50);
 }
