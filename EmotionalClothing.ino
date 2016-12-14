@@ -8,8 +8,6 @@
 
 LiquidCrystal lcd(1, 0, 9, 8, 7, 6);
 
-String fileNames[4] = {"BUGS2.WAV", "DAFFY1.WAV", "BUGS1.WAV", "DAFFY2.WAV"};
-
 const int button = A3;
 
 SdReader card;    // This object holds the information for the card
@@ -47,7 +45,6 @@ void setup() {
   setupRGBSensor(tcs);
   lcd.begin(16, 2);
   lcd.clear();
-  lcd.print("Before");
   pinMode(button, INPUT);
 }
 
@@ -55,15 +52,10 @@ void play() {
   root.rewind();
   FatReader file;
 
-  for (int i = 0; i < 4; i++) {
-    char fileName[fileNames[i].length() + 1];
-    fileNames[i].toCharArray(fileName, fileNames[i].length() + 1);
-
-    file.open(root, fileName);
-    wave.create(file);
-    wave.play();
-    while (wave.isplaying) delay(100);
-  }
+  file.open(root, "MACNTOSH.WAV");
+  wave.create(file);
+  wave.play();
+  while(wave.isplaying) delay(100);
 }
 
 void loop() {
