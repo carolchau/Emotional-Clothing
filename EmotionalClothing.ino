@@ -3,10 +3,9 @@
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
 #include <LiquidCrystal.h>
-
 #include "ColorUtil.h"
 
-LiquidCrystal lcd(1, 0, 9, 8, 7, 6);
+LiquidCrystal lcd(A0, A1, 9, 8, 7, 6);
 
 const int button = A3;
 
@@ -39,6 +38,7 @@ void setupRGBSensor(Adafruit_TCS34725 &tcs) {
 }
 
 void setup() {
+  Serial.begin(9600);
   setupSdReader(card);
   setupFatVolume(vol);
   setupFatReader(root);
