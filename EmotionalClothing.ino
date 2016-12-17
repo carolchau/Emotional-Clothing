@@ -53,7 +53,7 @@ void play() {
   FatReader file;
 
   file.open(root, "MACNTOSH.WAV");
-  wave.create(file);
+  if (!wave.create(file)) Serial.println("Can't open the file");
   wave.play();
   while(wave.isplaying) delay(100);
 }
