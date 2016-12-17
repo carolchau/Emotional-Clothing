@@ -1,3 +1,11 @@
+/*
+ * WaveHC and WaveUtil libraries are provided by Adafruit.
+ * Source: https://github.com/adafruit/WaveHC
+ *
+ * RGB Color Sensor library (Adafruit_TCS34725) is also provided by Adafruit.
+ * Source: https://github.com/adafruit/Adafruit_TCS34725
+ */
+
 #include <WaveHC.h>
 #include <WaveUtil.h>
 #include <Wire.h>
