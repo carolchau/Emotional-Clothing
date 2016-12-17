@@ -72,10 +72,33 @@ void play() {
   Serial.print(" S: "); Serial.print(hsl[1]);
   Serial.print(" L: "); Serial.print(hsl[2]); Serial.println();
 
+  int hue = hsl[0];
+  double saturation = hsl[1];
+  double light = hsl[2];
+
   root.rewind();
   FatReader file;
 
-  file.open(root, "MACNTOSH.WAV");
+  if (light < 0.2) {                // Black
+    file.open(root, "gmechngd.wav");
+  } else if (light > 0.8) {         // White
+    file.open(root, "avemaria.wav");
+  } else if (saturation < 0.25) {   // Gray
+    file.open(root, "veridquo.wav");
+  } else if (hue < 10) {            // Red
+    file.open(root, "nitefate.wav");
+  } else if (hue < 40) {            // Orange
+    file.open(root, "mariothm.wav");
+  } else if (hue < 90) {            // Yellow
+    file.open(root, "wiishopc.wav");
+  } else if (hue < 150) {           // Green
+    file.open(root, "swedenmc.wav");
+  } else if (hue < 270) {           // Blue
+    file.open(root, "animcros.wav");
+  } else if (hue < 330) {           // Magenta
+    file.open(root, "wndrland.wav");
+  } else file.open(root, "nitefate.wav"); // Red
+
   if (!wave.create(file)) Serial.println("Can't open the file");
   wave.play();
   while(wave.isplaying) delay(100);
