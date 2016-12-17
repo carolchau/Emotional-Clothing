@@ -96,28 +96,74 @@ void play() {
   root.rewind();
   FatReader file;
 
+  String title, artist, mood;
+
   if (light < 0.2) {                // Black
     file.open(root, "gmechngd.wav");
+    title = "Game has Changed";
+    artist = "Daft Punk";
+    mood = "Powerful";
   } else if (light > 0.8) {         // White
     file.open(root, "avemaria.wav");
+    title = "Ave Maria";
+    artist = "Schubert";
+    mood = "Pure";
   } else if (saturation < 0.25) {   // Gray
     file.open(root, "veridquo.wav");
+    title = "Veridis Quo";
+    artist = "Daft Punk";
+    mood = "Gloomy";
   } else if (hue < 10) {            // Red
     file.open(root, "nitefate.wav");
+    title = "Night of Fate";
+    artist = "Y. Shimomura";
+    mood = "Passionate";
   } else if (hue < 40) {            // Orange
     file.open(root, "mariothm.wav");
+    title = "Mario Theme";
+    artist = "Koji Kondo";
+    mood = "Playful";
   } else if (hue < 90) {            // Yellow
     file.open(root, "wiishopc.wav");
+    title = "Wii Shop Channel";
+    artist = "Kazumi Totaka";
+    mood = "Happy";
   } else if (hue < 150) {           // Green
     file.open(root, "swedenmc.wav");
+    title = "Sweden";
+    artist = "D. Rosenfeld";
+    mood = "Stable";
   } else if (hue < 270) {           // Blue
     file.open(root, "animcros.wav");
+    title = "Animal Crossing";
+    artist = "Kazumi Totaka";
+    mood = "Serene";
   } else if (hue < 330) {           // Magenta
     file.open(root, "wndrland.wav");
-  } else file.open(root, "nitefate.wav"); // Red
+    title = "Wonderland";
+    artist = "Y. Shimomura";
+    mood = "Innocent";
+  } else {                          // Red
+    file.open(root, "nitefate.wav");
+    title = "Night of Fate";
+    artist = "Y. Shimomura";
+    mood = "Passionate";
+  }
 
   if (!wave.create(file)) Serial.println("Can't open the file");
   wave.play();
+
+  delay(5000);
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0); lcd.print("T:"); lcd.print(title);
+  lcd.setCursor(0, 1); lcd.print("A:"); lcd.print(artist);
+  delay(5000);
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0); lcd.print("Mood");
+  lcd.setCursor(0, 1); lcd.print(mood);
+
   while(wave.isplaying) delay(100);
 
   displayDirections();
