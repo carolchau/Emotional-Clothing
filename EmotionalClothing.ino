@@ -37,14 +37,22 @@ void setupRGBSensor(Adafruit_TCS34725 &tcs) {
   if (!tcs.begin()) Serial.println("No TCS34725 found ... check your connections");
 }
 
+void displayDirections() {
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Hover clothing");
+  lcd.setCursor(0, 1);
+  lcd.print("over light.");
+}
+
 void setup() {
   Serial.begin(9600);
   setupSdReader(card);
   setupFatVolume(vol);
   setupFatReader(root);
   setupRGBSensor(tcs);
-  lcd.begin(16, 2);
-  lcd.clear();
+  displayDirections();
   pinMode(button, INPUT);
 }
 
@@ -65,16 +73,25 @@ void play() {
 
   double hsl[3];
   getHSL(hsl, r, g, b);
-  Serial.print("r: "); Serial.print((int) r);
-  Serial.print(" g: "); Serial.print((int) g);
-  Serial.print(" b: "); Serial.print((int) b); Serial.println();
-  Serial.print("H: "); Serial.print(hsl[0]);
-  Serial.print(" S: "); Serial.print(hsl[1]);
-  Serial.print(" L: "); Serial.print(hsl[2]); Serial.println();
+//  Serial.print("r: "); Serial.print((int) r);
+//  Serial.print(" g: "); Serial.print((int) g);
+//  Serial.print(" b: "); Serial.print((int) b); Serial.println();
+//  Serial.print("H: "); Serial.print(hsl[0]);
+//  Serial.print(" S: "); Serial.print(hsl[1]);
+//  Serial.print(" L: "); Serial.print(hsl[2]); Serial.println();
 
   int hue = hsl[0];
   double saturation = hsl[1];
   double light = hsl[2];
+
+  lcd.begin(16, 2);
+  lcd.clear();
+  lcd.setCursor(0, 0); lcd.print('R'); lcd.print(r, 0);
+  lcd.setCursor(5, 0); lcd.print('G'); lcd.print(g, 0);
+  lcd.setCursor(10, 0); lcd.print('B'); lcd.print(b, 0);
+  lcd.setCursor(0, 1); lcd.print('H'); lcd.print(hue);
+  lcd.setCursor(5, 1); lcd.print('S'); lcd.print(saturation * 100, 0); lcd.print('%');
+  lcd.setCursor(10, 1); lcd.print('L'); lcd.print(light * 100, 0); lcd.print('%');
 
   root.rewind();
   FatReader file;
@@ -102,6 +119,8 @@ void play() {
   if (!wave.create(file)) Serial.println("Can't open the file");
   wave.play();
   while(wave.isplaying) delay(100);
+
+  displayDirections();
 }
 
 void loop() {
