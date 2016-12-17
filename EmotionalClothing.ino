@@ -49,6 +49,29 @@ void setup() {
 }
 
 void play() {
+  uint16_t clear, red, green, blue;
+
+  tcs.setInterrupt(false);
+  delay(60);
+  tcs.getRawData(&red, &green, &blue, &clear);
+  tcs.setInterrupt(true);
+
+  uint32_t sum = clear;
+  float r, g, b;
+  r = red; r /= sum;
+  g = green; g /= sum;
+  b = blue; b /= sum;
+  r *= 256; g *= 256; b *= 256;
+
+  double hsl[3];
+  getHSL(hsl, r, g, b);
+  Serial.print("r: "); Serial.print((int) r);
+  Serial.print(" g: "); Serial.print((int) g);
+  Serial.print(" b: "); Serial.print((int) b); Serial.println();
+  Serial.print("H: "); Serial.print(hsl[0]);
+  Serial.print(" S: "); Serial.print(hsl[1]);
+  Serial.print(" L: "); Serial.print(hsl[2]); Serial.println();
+
   root.rewind();
   FatReader file;
 
