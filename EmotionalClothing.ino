@@ -108,21 +108,21 @@ void play() {
     file.open(root, "gmechngd.wav");
   } else if (light > 0.8) {         // White
     file.open(root, "avemaria.wav");
-  } else if (saturation < 0.25) {   // Gray
+  } else if (saturation < 0.05) {   // Gray
     file.open(root, "veridquo.wav");
-  } else if (hue < 10) {            // Red
+  } else if (hue < 5) {            // Red
     file.open(root, "nitefate.wav");
-  } else if (hue < 40) {            // Orange
+  } else if (hue < 50) {            // Orange
     file.open(root, "mariothm.wav");
-  } else if (hue < 90) {            // Yellow
+  } else if (hue < 110) {            // Yellow
     file.open(root, "wiishopc.wav");
-  } else if (hue < 150) {           // Green
+  } else if (hue < 170) {           // Green
     file.open(root, "swedenmc.wav");
-  } else if (hue < 270) {           // Blue
+  } else if (hue < 230) {           // Blue
     file.open(root, "animcros.wav");
-  } else if (hue < 330) {           // Magenta
+  } else if (hue < 360) {           // Magenta
     file.open(root, "wndrland.wav");
-  } else file.open(root, "nitefate.wav"); // Red
+  }
 
   if (!wave.create(file)) Serial.println("Can't open the file");
   wave.play();
