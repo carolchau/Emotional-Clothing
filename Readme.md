@@ -5,6 +5,7 @@
 [lcd]: http://i.imgur.com/u8NLPdG.jpg "LCD"
 [button]: http://i.imgur.com/u8NLPdG.jpg "Button"
 [finished]: http://i.imgur.com/IV4h7Ai.jpg "Final Product"
+[video]: http://i.imgur.com/NeDSLdI.jpg "Video"
 
 # Emotional Clothing
 
@@ -27,6 +28,10 @@ The HSL value that the sensor picks up will be classified into one of at least 8
 Because the color sensor I have will record RGB values, I will be using a formula to convert the RGB values into their corresponding HSL values.
 
 This device is only intended to be used for solid colored shirts.
+
+## Demo
+
+[![video]](https://www.youtube.com/watch?v=GCqKvXHVLQU)
 
 ## Materials
 
